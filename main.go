@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -157,8 +159,17 @@ func finalOperationArabic(a, b int, c string) (int, error) {
 
 func main() {
 	fmt.Println("Что посчитать?")
-	var firstNumber, operationSign, secondNumber string
-	fmt.Scan(&firstNumber, &operationSign, &secondNumber) // вводим строку
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	initialString := scanner.Text() //водим строку
+	splitString := strings.Split(initialString, " ")
+	if len(splitString) != 3 {
+		fmt.Println("Формат записи не соответствует заданию")
+		return
+	}
+	firstNumber := splitString[0]
+	operationSign := splitString[1]
+	secondNumber := splitString[2]
 	numberOne, err1 := convertStringToNumber(firstNumber)
 	numberTwo, err2 := convertStringToNumber(secondNumber)
 	if err1 != nil {
@@ -191,4 +202,5 @@ func main() {
 	} else {
 		fmt.Println(result)
 	}
+
 }
